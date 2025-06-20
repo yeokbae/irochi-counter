@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>이로치 카운터</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      text-align: center;
+      background-color: #f3f3f3;
+      padding: 40px;
+    }
+    .counter {
+      background: white;
+      display: inline-block;
+      padding: 30px;
+      border-radius: 16px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 10px;
+    }
+    input {
+      font-size: 1rem;
+      padding: 8px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      margin-bottom: 20px;
+      width: 80%;
+      max-width: 300px;
+    }
+    .count {
+      font-size: 4rem;
+      margin: 20px 0;
+    }
+    button {
+      font-size: 1rem;
+      padding: 10px 20px;
+      margin: 5px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+    }
+    .plus { background-color: #4caf50; color: white; }
+    .minus { background-color: #f44336; color: white; }
+    .reset { background-color: #555; color: white; }
+  </style>
+</head>
+<body>
+  <div class="counter">
+    <h1>이로치 카운터</h1>
+    <input type="text" id="pokemonName" placeholder="포켓몬 이름 입력" />
+    <div class="count" id="count">0</div>
+    <button class="plus" onclick="increment()">+1</button>
+    <button class="minus" onclick="decrement()">-1</button>
+    <button class="reset" onclick="reset()">리셋</button>
+  </div>
+
+  <script>
+    let count = parseInt(localStorage.getItem('shinyCount')) || 0;
+    let name = localStorage.getItem('pokemonName') || "";
+
+    document.getElementById('count').innerText = count;
+    document.getElementById('pokemonName').value = name;
+
+    function updateDisplay() {
+      document.getElementById('count').innerText = count;
+      localStorage.setItem('shinyCount', count);
+    }
+
+    function increment() {
+      count++;
+      updateDisplay();
+    }
+
+    function decrement() {
+      if (count > 0) {
+        count--;
+        updateDisplay();
+      }
+    }
+
+    function reset() {
+      if (confirm("카운트를 초기화할까요?")) {
+        count = 0;
+        updateDisplay();
+      }
+    }
+
+    document.getElementById('pokemonName').addEventListener('input', function(e) {
+      localStorage.setItem('pokemonName', e.target.value);
+    });
+  </script>
+</body>
+</html>
